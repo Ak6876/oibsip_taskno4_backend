@@ -92,22 +92,4 @@ router.post(
      }
   })
 
-  //ROUTE 3: Get Loggedin User Details using: POST "/api/auth/getUser"  require Auth  Login Required
-  router.post(
-    "/getUser",fetchUser,
-    async(req, res) => {
-        //if there are errors, return bad request and the errors
-     const result = validationResult(req);
-     if (!result.isEmpty()) {
-       return res.status(400).json({errors: error.array()});
-     }
-  try {
-   const userid = req.user.id
-    const user = await User.findById(userid).select("-password")
-    res.json({user})
-  } catch (error) {
-    console.error(error.message)
-    res.status(500).send("Internal Server Error")
-  }
-})
 module.exports = router;
